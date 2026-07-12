@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Açaí da Maju - Cardápio Digital</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #fafafa;
+      color: #1a1a1a;
+      min-height: 100vh;
+      padding: 0;
+    }
+    .container {
+      max-width: 520px;
+      margin: 0 auto;
+    }
+    /* Banner */
+    .banner {
+      width: 100%;
+      border-radius: 0 0 16px 16px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+    .banner img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+    }
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+      padding: 0 16px;
+    }
+    .logo {
+      width: 90px;
+      height: 90px;
+      margin: 0 auto 10px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid #7B1FA2;
+      box-shadow: 0 4px 12px rgba(123,31,162,0.25);
+    }
+    .logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .header h1 {
+      font-size: 26px;
+      font-weight: 500;
+      color: #4A148C;
+      letter-spacing: 0.5px;
+    }
+    .header p {
+      font-size: 13px;
+      color: #9C27B0;
+      margin-top: 4px;
+    }
+    /* Price Banner */
+    .price-banner {
+      background: #4A148C;
+      color: #fff;
+      border-radius: 12px;
+      padding: 18px;
+      text-align: center;
+      margin: 0 16px 20px;
+    }
+    .price-banner span {
+      font-size: 13px;
+      opacity: 0.85;
+    }
+    .price-banner .price {
+      font-size: 34px;
+      font-weight: 500;
+      margin-top: 4px;
+      font-variant-numeric: tabular-nums;
+    }
+    /* Steps */
+    .step {
+      margin-bottom: 20px;
+      padding: 0 16px;
+      transition: opacity 0.3s ease;
+    }
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .step-number {
+      width: 28px;
+      height: 28px;
+      background: #7B1FA2;
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 500;
+      flex-shrink: 0;
+    }
+    .step-title {
+      font-size: 17px;
+      font-weight: 500;
+      color: #4A148C;
+    }
+    .step-subtitle {
+      font-size: 12px;
+      color: #9C27B0;
+      margin: -6px 0 10px 36px;
+    }
+    .step-count {
+      font-size: 12px;
+      color: #9C27B0;
+      background: #F3E5F5;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-left: auto;
+    }
+    /* Buttons */
+    .btn-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .btn-grid.full {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .btn {
+      padding: 12px 14px;
+      border: 2px solid #E1BEE7;
+      border-radius: 10px;
+      background: transparent;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      color: #4A148C;
+      text-align: left;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+    .btn:hover {
+      border-color: #7B1FA2;
+    }
+    .btn.active {
+      background: #7B1FA2;
+      border-color: #7B1FA2;
+      color: #fff;
+    }
+    .btn-delivery {
+      flex: 1;
+      text-align: center;
+      padding: 14px;
+    }
+    .btn-delivery .label {
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .btn-delivery .sublabel {
+      font-size: 12px;
+      color: #9C27B0;
+      font-weight: 400;
+      margin-top: 2px;
+    }
+    /* Summary */
+    .summary {
+      background: #F3E5F5;
+      border-radius: 12px;
+      padding: 16px;
+      margin: 0 16px 16px;
+      display: none;
+    }
+    .summary h3 {
+      font-size: 15px;
+      font-weight: 500;
+      margin-bottom: 12px;
+      color: #4A148C;
+    }
+    .summary-content {
+      font-size: 13px;
+      color: #7B1FA2;
+      line-height: 1.8;
+    }
+    .summary-content strong {
+      color: #4A148C;
+    }
+    .summary-total {
+      border-top: 1px solid #E1BEE7;
+      margin-top: 12px;
+      padding-top: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .summary-total .label {
+      font-size: 14px;
+      font-weight: 500;
+      color: #4A148C;
+    }
+    .summary-total .price {
+      font-size: 22px;
+      font-weight: 500;
+      color: #4A148C;
+      font-variant-numeric: tabular-nums;
+    }
+    /* WhatsApp Button */
+    .btn-whatsapp {
+      width: calc(100% - 32px);
+      margin: 0 16px 24px;
+      padding: 16px;
+      background: #4A148C;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+    .btn-whatsapp:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+    .btn-whatsapp:not(:disabled):hover {
+      background: #6A1B9A;
+    }
+    /* Disabled steps */
+    .step.disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+    /* Delivery row */
+    .delivery-row {
+      display: flex;
+      gap: 10px;
+    }
+    /* Responsive */
+    @media (max-width: 400px) {
+      .btn-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Banner -->
+    <div class="banner">
+      <img src="https://raw.githubusercontent.com/UiltonFelipe/acai-da-maju/main/banner.png" alt="Açaí da Maju Banner">
+    </div>
+
+    <!-- Header -->
+    <div class="header">
+      <div class="logo">
+        <img src="https://raw.githubusercontent.com/UiltonFelipe/acai-da-maju/main/logo.png" alt="Logo Açaí da Maju">
+      </div>
+      <h1>Açaí da Maju</h1>
+      <p>Naturalmente irresistível sempre!</p>
+    </div>
+
+    <!-- Price -->
+    <div class="price-banner">
+      <span>Açaí tradicional</span>
+      <div class="price">R$ 10,00</div>
+    </div>
+
+    <!-- Step 1: Creme -->
+    <div class="step" id="step-creme">
+      <div class="step-header">
+        <div class="step-number">1</div>
+        <div class="step-title">Escolha o creme</div>
+      </div>
+      <p class="step-subtitle">Pode escolher um ou os dois</p>
+      <div class="btn-grid">
+        <button class="btn" onclick="toggleCreme('açai')" id="btn-açai">Açaí</button>
+        <button class="btn" onclick="toggleCreme('ninho')" id="btn-ninho">Ninho</button>
+      </div>
+    </div>
+
+    <!-- Step 2: Ingredientes -->
+    <div class="step disabled" id="step-ingredientes">
+      <div class="step-header">
+        <div class="step-number">2</div>
+        <div class="step-title">Ingredientes</div>
+        <span class="step-count" id="ing-count">0/5</span>
+      </div>
+      <p class="step-subtitle">Escolha até 5 ingredientes</p>
+      <div class="btn-grid">
+        <button class="btn" onclick="toggleIng('Ovomaltine')" id="ing-Ovomaltine">Ovomaltine</button>
+        <button class="btn" onclick="toggleIng('Chocoball')" id="ing-Chocoball">Chocoball</button>
+        <button class="btn" onclick="toggleIng('Choco Power')" id="ing-Choco Power">Choco Power</button>
+        <button class="btn" onclick="toggleIng('Leite em pó')" id="ing-Leite em pó">Leite em pó</button>
+        <button class="btn" onclick="toggleIng('Jujuba')" id="ing-Jujuba">Jujuba</button>
+        <button class="btn" onclick="toggleIng('Granola')" id="ing-Granola">Granola</button>
+        <button class="btn" onclick="toggleIng('Amendoim triturado')" id="ing-Amendoim triturado">Amendoim</button>
+        <button class="btn" onclick="toggleIng('Coco ralado')" id="ing-Coco ralado">Coco ralado</button>
+        <button class="btn" onclick="toggleIng('Gotas de chocolate')" id="ing-Gotas de chocolate" style="grid-column: span 2;">Gotas de chocolate</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Cobertura -->
+    <div class="step disabled" id="step-cobertura">
+      <div class="step-header">
+        <div class="step-number">3</div>
+        <div class="step-title">Cobertura (1)</div>
+      </div>
+      <div class="btn-grid full">
+        <button class="btn" onclick="selectCobertura('Leite condensado')" id="cob-Leite condensado">Leite condensado</button>
+        <button class="btn" onclick="selectCobertura('Cobertura de morango')" id="cob-Cobertura de morango">Cobertura de morango</button>
+        <button class="btn" onclick="selectCobertura('Cobertura de chocolate')" id="cob-Cobertura de chocolate">Cobertura de chocolate</button>
+      </div>
+    </div>
+
+    <!-- Step 4: Entrega -->
+    <div class="step disabled" id="step-entrega">
+      <div class="step-header">
+        <div class="step-number">4</div>
+        <div class="step-title">Forma de entrega</div>
+      </div>
+      <div class="delivery-row">
+        <button class="btn btn-delivery" onclick="selectEntrega('retirada')" id="ent-retirada">
+          <div class="label">Retirada</div>
+          <div class="sublabel">Grátis</div>
+        </button>
+        <button class="btn btn-delivery" onclick="selectEntrega('delivery')" id="ent-delivery">
+          <div class="label">Delivery</div>
+          <div class="sublabel">+ R$ 2,00</div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Resumo -->
+    <div class="summary" id="resumo">
+      <h3>Seu pedido</h3>
+      <div class="summary-content" id="resumo-content"></div>
+      <div class="summary-total">
+        <span class="label">Total</span>
+        <span class="price" id="total-price">R$ 10,00</span>
+      </div>
+    </div>
+
+    <!-- WhatsApp -->
+    <button class="btn-whatsapp" id="btn-whatsapp" onclick="enviarPedido()" disabled>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+      </svg>
+      Enviar pedido pelo WhatsApp
+    </button>
+  </div>
+
+  <script>
+    let state = {
+      cremes: [],
+      ingredientes: [],
+      cobertura: null,
+      entrega: null
+    };
+
+    function toggleCreme(creme) {
+      const idx = state.cremes.indexOf(creme);
+      if (idx > -1) state.cremes.splice(idx, 1);
+      else state.cremes.push(creme);
+
+      document.querySelectorAll('#step-creme .btn').forEach(btn => {
+        const name = btn.id.replace('btn-', '');
+        btn.classList.toggle('active', state.cremes.includes(name));
+      });
+
+      if (state.cremes.length > 0) enableStep('step-ingredientes');
+      else {
+        disableStep('step-ingredientes');
+        disableStep('step-cobertura');
+        disableStep('step-entrega');
+      }
+      updateResumo();
+    }
+
+    function toggleIng(ing) {
+      const idx = state.ingredientes.indexOf(ing);
+      if (idx > -1) state.ingredientes.splice(idx, 1);
+      else {
+        if (state.ingredientes.length >= 5) {
+          alert('Você pode escolher no máximo 5 ingredientes!');
+          return;
+        }
+        state.ingredientes.push(ing);
+      }
+
+      document.querySelectorAll('#step-ingredientes .btn').forEach(btn => {
+        const name = btn.id.replace('ing-', '');
+        btn.classList.toggle('active', state.ingredientes.includes(name));
+      });
+
+      document.getElementById('ing-count').textContent = state.ingredientes.length + '/5';
+
+      if (state.ingredientes.length > 0) enableStep('step-cobertura');
+      else {
+        disableStep('step-cobertura');
+        disableStep('step-entrega');
+      }
+      updateResumo();
+    }
+
+    function selectCobertura(cob) {
+      state.cobertura = cob;
+      document.querySelectorAll('#step-cobertura .btn').forEach(btn => {
+        btn.classList.toggle('active', btn.id === 'cob-' + cob);
+      });
+      enableStep('step-entrega');
+      updateResumo();
+    }
+
+    function selectEntrega(ent) {
+      state.entrega = ent;
+      document.querySelectorAll('#step-entrega .btn').forEach(btn => {
+        btn.classList.toggle('active', btn.id === 'ent-' + ent);
+      });
+      updateResumo();
+    }
+
+    function enableStep(id) {
+      document.getElementById(id).classList.remove('disabled');
+    }
+    function disableStep(id) {
+      document.getElementById(id).classList.add('disabled');
+    }
+
+    function updateResumo() {
+      const resumo = document.getElementById('resumo');
+      const content = document.getElementById('resumo-content');
+      const totalEl = document.getElementById('total-price');
+      const btn = document.getElementById('btn-whatsapp');
+
+      if (state.cremes.length === 0) {
+        resumo.style.display = 'none';
+        btn.disabled = true;
+        return;
+      }
+
+      resumo.style.display = 'block';
+      let html = '<div><strong>Creme:</strong> ' + state.cremes.map(c => c.charAt(0).toUpperCase() + c.slice(1)).join(' + ') + '</div>';
+      if (state.ingredientes.length > 0) html += '<div><strong>Ingredientes:</strong> ' + state.ingredientes.join(', ') + '</div>';
+      if (state.cobertura) html += '<div><strong>Cobertura:</strong> ' + state.cobertura + '</div>';
+      if (state.entrega) html += '<div><strong>Entrega:</strong> ' + (state.entrega === 'delivery' ? 'Delivery (+ R$ 2,00)' : 'Retirada (Grátis)') + '</div>';
+      content.innerHTML = html;
+
+      let total = 10;
+      if (state.entrega === 'delivery') total += 2;
+      totalEl.textContent = 'R$ ' + total.toFixed(2).replace('.', ',');
+
+      btn.disabled = !(state.cremes.length > 0 && state.ingredientes.length > 0 && state.cobertura && state.entrega);
+    }
+
+    function enviarPedido() {
+      let msg = '*Pedido - Açaí da Maju*\n\n';
+      msg += 'Creme: ' + state.cremes.map(c => c.charAt(0).toUpperCase() + c.slice(1)).join(' + ') + '\n';
+      msg += 'Ingredientes: ' + state.ingredientes.join(', ') + '\n';
+      msg += 'Cobertura: ' + state.cobertura + '\n';
+      msg += 'Entrega: ' + (state.entrega === 'delivery' ? 'Delivery (+R$ 2,00)' : 'Retirada (Grátis)') + '\n\n';
+      let total = 10 + (state.entrega === 'delivery' ? 2 : 0);
+      msg += 'Total: R$ ' + total.toFixed(2).replace('.', ',') + '\n';
+      msg += '\nObs: Endereço para entrega será informado aqui.';
+      window.open('https://wa.me/5585992813244?text=' + encodeURIComponent(msg), '_blank');
+    }
+  </script>
+</body>
+</html>
